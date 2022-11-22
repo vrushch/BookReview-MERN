@@ -26,7 +26,7 @@ const App = () => {
 
 
 	return (
-		<div className='container-fluid movie-app'>
+		<div className='container-fluid book-app'>
 			<div className='row d-flex align-items-center mt-4 mb-4'>
 				<Heading heading='Books' />
 				<SearchBox searchValue={searchValue} setSearchValue={setSearchValue} />
