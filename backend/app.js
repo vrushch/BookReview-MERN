@@ -1,14 +1,14 @@
 const express = require("express");
 const app = express();
 const port = 5001;
-const router = require("./routes/book");
+const bookRouter = require("./routes/books");
+const reviewRouter = require("./routes/reviews")
 const {connectToDB} = require('./db');
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
-app.use("/api/books",router)
-app.use(express.static("public"));
+app.use("/api/books",bookRouter);
+app.use("/api/reviews", reviewRouter);
 
 app.get("/",function(req,res){
     res.send("booksapi")

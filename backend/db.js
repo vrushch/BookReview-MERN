@@ -3,7 +3,7 @@ require('dotenv').config();
 const uri = process.env.mongodb_uri;
 const client = new MongoClient(uri);
 const dbName = "prdb";
-const collectionName = "books";
+
 
 module.exports = {
     connectToDB: async function () {
@@ -13,19 +13,25 @@ module.exports = {
         }
         catch (err) {
             console.log("connect error", err);
-            res.redirect("/500.html");
+            res.status(500).send('Internal Server Error');
         }
     },
-    addToDB: async function (task) {
+    addToDB: async function (task, collectionName) {
         const result = await client.db(dbName).collection(collectionName).insertOne(task);
     },
-    readAll: async function () {
+    readAll: async function (collectionName) {
         const cursor = await client.db(dbName).collection(collectionName).find();
         const data = await cursor.toArray();
         return data;
     },
-    readOne: async function (filter) {
+    readOne: async function (filter, collectionName) {
         const result = await client.db(dbName).collection(collectionName).findOne(filter);
         return result;
+    },
+    deleteOne: async function (filter, collectionName) {
+        const result = await client.db(dbName).collection(collectionName).deleteOne(filter);
+    },
+    updateOne: async function (filter, updateInfo, collectionName) {
+        const result = await client.db(dbName).collection(collectionName).updateOne(filter, updateInfo);
     }
 }

@@ -1,29 +1,25 @@
 const express = require("express");
 const router = express.Router();
 
-const path = require("path");
-
-
 const { addToDB, readAll, readOne, deleteOne, updateOne } = require('../db');
 const { ObjectId } = require("mongodb");
-
-
+const collectionName = "books";
 
 router.post("/add", async function (req, res) {
-   console.log(req.body);
    try {
-     await addToDB(req.body);
+     await addToDB(req.body, collectionName);
+     res.status(200).send();
    }
    catch (err) {
+      console.log(err);
      res.status(500).send('Internal Server Error');
    }
 });
 
 router.get("/",async function(req,res){
    try{
-      const data = await readAll();
+      const data = await readAll(collectionName);
       res.json(data);
-      //res.render('tasks.pug',{values:data});
    }
    catch(err){
       console.log(err);
@@ -34,7 +30,7 @@ router.get("/",async function(req,res){
 
 router.get("/:bookId",async function(req,res){
    try{
-      const data = await readOne({ _id: ObjectId(req.params.bookId) });
+      const data = await readOne({ _id: ObjectId(req.params.bookId) }, collectionName);
       if (data){
          res.json(data);
       }else{
