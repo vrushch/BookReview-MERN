@@ -10,15 +10,16 @@ const App = () => {
 	const [searchValue, setSearchValue] = useState('');
 
 	const getBookRequest = async (searchValue) => {
-    const url = "https://www.googleapis.com/books/v1/volumes?q=harry+potter";
+    const url = "https://project-3-backend-fevm.onrender.com/api/books";
+    //const url = "https://www.googleapis.com/books/v1/volumes?q=harry+potter";
     //const url = `https://www.googleapis.com/books/v1/volumes?q=${searchValue}`;
 		const response = await fetch(url);
 		const responseJson = await response.json();
-
-		if (responseJson.items) {
-			setBooks(responseJson.items);
+		if (responseJson) {
+			setBooks(responseJson);
 		}
 	};
+
 
 	useEffect(() => {
 		getBookRequest(searchValue);
