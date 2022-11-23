@@ -5,6 +5,7 @@ export default function BookDetails() {
   const [bookDetails, setBookDetails] = useState(0);
   const [reviewsDetails, setReviews] = useState(0);
   const [reviewUpdated, setReviewUpdated] = useState(false);
+  const [addReview, setAddReview] = useState(false);
   const [editReview, setEditReview] = useState(false);
   const [editReviewText, setEditReviewText] = useState("");
   const [editIndex, setEditIndex] = useState(0);
@@ -64,6 +65,27 @@ export default function BookDetails() {
     });
     setEditReview(false);
     setReviewUpdated(!reviewUpdated);
+    setEditReviewText("");
+  }
+
+  async function createReview(review_text) {
+    const reqBody = {
+      book_id: bookId,
+      review_text: review_text,
+    };
+    const url = `https://project-3-backend-fevm.onrender.com/api/reviews/add`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify(reqBody),
+    });
+    setEditReview(false);
+    setEditReviewText("");
+    setReviewUpdated(!reviewUpdated);
+    setAddReview(false);
   }
 
   return (
@@ -78,6 +100,16 @@ export default function BookDetails() {
           <h3>Description</h3>
           <div>{bookDetails.volumeInfo.description}</div>
           <h3>Reviews</h3>
+          {!editReview && (
+            <button
+              onClick={() => {
+                setAddReview(true);
+                setEditReview(true);
+              }}
+            >
+              Add New Review{" "}
+            </button>
+          )}
           {!editReview ? (
             reviewsDetails.map((review, index) => {
               return (
@@ -104,13 +136,23 @@ export default function BookDetails() {
                 value={editReviewText}
                 onChange={(e) => setEditReviewText(e.target.value)}
               />
-              <button
-                onClick={() =>
-                  saveReview(reviewsDetails[editIndex]._id, editReviewText)
-                }
-              >
-                Save
-              </button>
+              {addReview ? (
+                <button
+                  onClick={() => {
+                    createReview(editReviewText);
+                  }}
+                >
+                  Create{" "}
+                </button>
+              ) : (
+                <button
+                  onClick={() =>
+                    saveReview(reviewsDetails[editIndex]._id, editReviewText)
+                  }
+                >
+                  Save
+                </button>
+              )}
             </div>
           )}
         </>
