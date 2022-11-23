@@ -5,6 +5,7 @@ import BookList from "./components/BookList";
 import Heading from "./components/Heading";
 import SearchBox from "./components/SearchBox";
 import { Link, Route, Routes } from "react-router-dom";
+import BookDetails from "./components/BookDetails";
 
 const App = () => {
   const [searchValue, setSearchValue] = useState("");
@@ -40,7 +41,9 @@ const App = () => {
             />
           }
         ></Route>
-        {/* <Route path="/tasks/:taskId" element={<TaskDetails />} /> */}
+
+        {/* <Route path="/bookDetails" element={<BookDetails />}></Route> */}
+        <Route path="/bookDetails/:bookId" element={<BookDetails />} />
         <Route path="*" element={<p>Nothing to match this path. </p>} />
       </Routes>
 
