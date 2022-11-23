@@ -5,6 +5,9 @@ export default function BookDetails() {
   const [bookDetails, setBookDetails] = useState(0);
   const [reviewsDetails, setReviews] = useState(0);
   const [reviewUpdated, setReviewUpdated] = useState(false);
+  const [editReview, setEditReview] = useState(false);
+  const [editReviewText, setEditReviewText] = useState("");
+  const [editIndex, setEditIndex] = useState(0);
   const params = useParams();
   const bookId = params.bookId;
   console.log("++++++");
@@ -42,14 +45,26 @@ export default function BookDetails() {
   async function deleteReview(reviewId) {
     const url = `https://project-3-backend-fevm.onrender.com/api/reviews/delete/${reviewId}`;
     const response = await fetch(url, { method: "DELETE" });
-    setReviewUpdated(true);
+    setReviewUpdated(!reviewUpdated);
   }
 
-  // async function updateReview(reviewId) {
-  //   const url = `https://project-3-backend-fevm.onrender.com/api/reviews/delete/${reviewId}`;
-  //   const response = await fetch(url, { method: "DELETE" });
-  //   setReviewUpdated(true);
-  // }
+  async function saveReview(reviewId, review_text) {
+    const reqBody = {
+      _id: reviewId,
+      review_text: review_text,
+    };
+    const url = `https://project-3-backend-fevm.onrender.com/api/reviews/edit`;
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        accept: "application/json",
+      },
+      body: JSON.stringify(reqBody),
+    });
+    setEditReview(false);
+    setReviewUpdated(!reviewUpdated);
+  }
 
   return (
     <>
@@ -63,15 +78,41 @@ export default function BookDetails() {
           <h3>Description</h3>
           <div>{bookDetails.volumeInfo.description}</div>
           <h3>Reviews</h3>
-          {reviewsDetails.map((review, index) => {
-            return (
-              <div key={index}>
-                {review.review_text}
-                <button onClick={() => deleteReview(review._id)}>Delete</button>
-                {/* <button onClick={() => updateReview(review._id)}>Update</button> */}
-              </div>
-            );
-          })}
+          {!editReview ? (
+            reviewsDetails.map((review, index) => {
+              return (
+                <div key={index}>
+                  {review.review_text}
+                  <button onClick={() => deleteReview(review._id)}>
+                    Delete
+                  </button>
+                  <button
+                    onClick={() => {
+                      setEditReview(true);
+                      setEditIndex(index);
+                    }}
+                  >
+                    Update
+                  </button>
+                </div>
+              );
+            })
+          ) : (
+            <div>
+              <input
+                placeholder="Enter New Review"
+                value={editReviewText}
+                onChange={(e) => setEditReviewText(e.target.value)}
+              />
+              <button
+                onClick={() =>
+                  saveReview(reviewsDetails[editIndex]._id, editReviewText)
+                }
+              >
+                Save
+              </button>
+            </div>
+          )}
         </>
       )}
     </>
