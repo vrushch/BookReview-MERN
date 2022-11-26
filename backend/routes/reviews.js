@@ -68,11 +68,20 @@ router.get("/book/:bookId", async function (req, res) {
       { book_id: req.params.bookId },
       collectionName
     );
-    if (data) {
-      res.json(data);
-    } else {
-      res.json({});
-    }
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/user/:userId", async function (req, res) {
+  try {
+    const data = await readAllWithFilter(
+      { user_id: req.params.userId },
+      collectionName
+    );
+    res.json(data);
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");
