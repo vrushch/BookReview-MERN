@@ -24,7 +24,7 @@ const App = () => {
           <ProtectedRoute path="/profile" component={Profile} />
           <ProtectedRoute path="/external-api" component={ExternalApi} />
           <Route path="/search" exact component={Search} />
-          <Route path="/bookDetails/:bookId" component={BookDetail} />
+          <ProtectedRoute path="/bookDetails/:bookId" component={BookDetail} />
           <Route path="*" element={<p>Nothing to match this path. </p>} />
         </Switch>
       </div>
