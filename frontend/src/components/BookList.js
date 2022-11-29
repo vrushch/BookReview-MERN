@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const BookList = (props) => {
   const [books, setBooks] = useState([]);
-  const navigate = useNavigate();
+  const history = useHistory();
 
   const getBookRequest = async () => {
     const url = "https://project-3-backend-fevm.onrender.com/api/books";
@@ -16,7 +15,7 @@ const BookList = (props) => {
   };
   function navigateToBookDetails(bookid) {
     console.log(bookid);
-    navigate(`/bookDetails/${bookid}`);
+    history.push(`/bookDetails/${bookid}`);
   }
   useEffect(() => {
     getBookRequest();
