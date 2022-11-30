@@ -11,8 +11,14 @@ const {
 } = require("../db");
 const { ObjectId } = require("mongodb");
 const collectionName = "reviews";
+const { auth } = require("express-oauth2-jwt-bearer");
 
-router.post("/add", async function (req, res) {
+const checkJWT = auth({
+  audience: process.env.AUTH0_AUDIENCE,
+  issuerBaseURL: `https://${process.env.AUTH0_DOMAIN}/`,
+});
+
+router.post("/add", checkJWT, async function (req, res) {
   let addObject = {
     book_id: req.body.book_id,
     review_text: req.body.review_text,
@@ -36,7 +42,7 @@ router.get("/", async function (req, res) {
   }
 });
 
-router.patch("/edit", async function (req, res) {
+router.patch("/edit", checkJWT, async function (req, res) {
   try {
     const filter = { _id: ObjectId(req.body._id) };
     const updateInfo = {
@@ -52,7 +58,7 @@ router.patch("/edit", async function (req, res) {
   }
 });
 
-router.delete("/delete/:reviewId", async function (req, res) {
+router.delete("/delete/:reviewId", checkJWT, async function (req, res) {
   try {
     await deleteOne({ _id: ObjectId(req.params.reviewId) }, collectionName);
     res.status(200).send();
@@ -62,7 +68,7 @@ router.delete("/delete/:reviewId", async function (req, res) {
   }
 });
 
-router.get("/book/:bookId", async function (req, res) {
+router.get("/book/:bookId", checkJWT, async function (req, res) {
   try {
     const data = await readAllWithFilter(
       { book_id: req.params.bookId },
