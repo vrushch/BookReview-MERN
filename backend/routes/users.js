@@ -35,7 +35,8 @@ var checkJWT = jwt({
 // Profile Read
 router.get("/profile", checkJWT, async (req, res) => {
   const auth0Id = req.auth.sub;
-  const user = await readOne({ user_id: req.params.auth0Id }, collectionName);
+
+  const user = await readOne({ auth0Id: auth0Id }, collectionName);
   if (user) {
     res.json(user);
   } else {
@@ -55,7 +56,8 @@ router.put("/profile", checkJWT, async (req, res) => {
     },
   };
   await updateOne({ auth0Id: auth0Id }, updateInfo, collectionName);
-  res.send(updateInfo);
+
+  res.json(updateInfo);
 });
 
 router.post("/verify-user", checkJWT, async (req, res) => {
@@ -63,7 +65,8 @@ router.post("/verify-user", checkJWT, async (req, res) => {
   const email = req.auth[`${process.env.AUTH0_AUDIENCE}email`];
   const name = req.auth[`${process.env.AUTH0_AUDIENCE}name`];
 
-  const user = await readOne({ user_id: req.params.auth0Id }, collectionName);
+  const user = await readOne({ auth0Id: auth0Id }, collectionName);
+
   if (user) {
     res.json(user);
   } else {
@@ -75,7 +78,7 @@ router.post("/verify-user", checkJWT, async (req, res) => {
       bio: "",
     };
     const newUser = await addToDB(addObject, collectionName);
-    res.json(newUser);
+    res.json({ auth0Id: auth0Id });
   }
 });
 
