@@ -23,7 +23,7 @@ function Profile() {
   const [email, setEmail] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5001/profile", {
+    fetch("https://project-3-backend-fevm.onrender.com/profile", {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -59,7 +59,7 @@ function Profile() {
   };
 
   const saveProfile = () => {
-    fetch("http://localhost:5001/profile", {
+    fetch("https://project-3-backend-fevm.onrender.com/profile", {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

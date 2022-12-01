@@ -13,8 +13,7 @@ export default function VerifyUser() {
 
   useEffect(() => {
     async function verifyUser() {
-      const URL = `http://localhost:5001/verify-user`;
-      //   const URL = `https://project-3-backend-fevm.onrender.com/verify-user`;
+      const URL = `https://project-3-backend-fevm.onrender.com/verify-user`;
       console.log(URL);
       const data = await fetch(URL, {
         method: "POST",
