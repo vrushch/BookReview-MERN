@@ -5,6 +5,7 @@ const port = 5001;
 const bookRouter = require("./routes/books");
 const reviewRouter = require("./routes/reviews");
 const userRouter = require("./routes/users");
+const messageRouter = require("./routes/messages");
 const { connectToDB } = require("./db");
 
 app.use(express.urlencoded({ extended: true }));
@@ -25,6 +26,7 @@ app.use(function (req, res, next) {
 
 app.use("/api/books", bookRouter);
 app.use("/api/reviews", reviewRouter);
+app.use("/api/messages", messageRouter);
 app.use("/", userRouter);
 
 app.get("/", function (req, res) {

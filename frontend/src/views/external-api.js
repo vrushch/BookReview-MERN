@@ -5,7 +5,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 const ExternalApi = () => {
   const [message, setMessage] = useState("");
-  const serverUrl = process.env.REACT_APP_SERVER_URL;
+  // const serverUrl = process.env.REACT_APP_SERVER_URL;
+  const serverUrl = "http://localhost:5001";
 
   const { getAccessTokenSilently } = useAuth0();
 
@@ -15,7 +16,10 @@ const ExternalApi = () => {
 
       const responseData = await response.json();
 
-      setMessage(responseData.message);
+      setMessage(JSON.stringify(responseData));
+      console.log("RESPONSE");
+      console.log(JSON.stringify(responseData));
+      console.log("END");
     } catch (error) {
       setMessage(error.message);
     }
@@ -35,8 +39,8 @@ const ExternalApi = () => {
       );
 
       const responseData = await response.json();
-
-      setMessage(responseData.message);
+      setMessage(JSON.stringify(responseData));
+      // setMessage(responseData.message);
     } catch (error) {
       setMessage(error.message);
     }
