@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import { useAuthToken } from "../auth/AuthTokenContext";
 
 export default function BookDetails() {
   const [bookDetails, setBookDetails] = useState(0);
@@ -13,6 +14,7 @@ export default function BookDetails() {
   const bookId = params.bookId;
   console.log("++++++");
   console.log(bookId);
+  const { accessToken } = useAuthToken();
 
   useEffect(() => {
     const getBookDetails = async () => {
@@ -45,7 +47,14 @@ export default function BookDetails() {
 
   async function deleteReview(reviewId) {
     const url = `https://project-3-backend-fevm.onrender.com/api/reviews/delete/${reviewId}`;
-    const response = await fetch(url, { method: "DELETE" });
+    const response = await fetch(url, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+        accept: "application/json",
+      },
+    });
     setReviewUpdated(!reviewUpdated);
   }
 
@@ -54,11 +63,13 @@ export default function BookDetails() {
       _id: reviewId,
       review_text: review_text,
     };
+
     const url = `https://project-3-backend-fevm.onrender.com/api/reviews/edit`;
     const response = await fetch(url, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
         accept: "application/json",
       },
       body: JSON.stringify(reqBody),
@@ -73,11 +84,13 @@ export default function BookDetails() {
       book_id: bookId,
       review_text: review_text,
     };
+
     const url = `https://project-3-backend-fevm.onrender.com/api/reviews/add`;
     const response = await fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
         accept: "application/json",
       },
       body: JSON.stringify(reqBody),
