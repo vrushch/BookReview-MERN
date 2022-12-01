@@ -19,14 +19,14 @@ const MainNav = () => (
     >
       Profile
     </NavLink>
-    <NavLink
+    {/* <NavLink
       to="/external-api"
       exact
       className="nav-link"
       activeClassName="router-link-exact-active"
     >
       External API
-    </NavLink>
+    </NavLink> */}
     <NavLink
       to="/search"
       exact
