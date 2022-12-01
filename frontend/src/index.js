@@ -5,12 +5,15 @@ import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history";
 import "./index.css";
+import { AuthTokenProvider } from "./auth/AuthTokenContext";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <BrowserRouter>
     <Auth0ProviderWithHistory>
-      <App />
+      <AuthTokenProvider>
+        <App />
+      </AuthTokenProvider>
     </Auth0ProviderWithHistory>
   </BrowserRouter>
   //<React.StrictMode>

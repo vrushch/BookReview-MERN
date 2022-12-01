@@ -1,35 +1,145 @@
 // src/views/profile.js
-
-import React from "react";
-
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
+import React, { useState, useEffect } from "react";
+import { useAuthToken } from "../auth/AuthTokenContext";
 import { useAuth0 } from "@auth0/auth0-react";
 
-const Profile = () => {
-  const { user } = useAuth0();
-  const { name, picture, email } = user;
+function Profile() {
+  //const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+  console.log("Before Token");
+  const { accessToken } = useAuthToken();
+  console.log("Token" + accessToken);
+  //const { accessToken } = getAccessTokenSilently();
+  console.log(accessToken);
+
+  const [inputChanged, setInputChanged] = useState(false);
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState("");
+  const [bio, setBio] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:5001/profile", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        setName(json.name);
+        setEmail(json.email);
+        setGender(json.gender);
+        setBio(json.bio);
+      });
+  }, []);
+
+  const handleChange = () => {
+    setInputChanged(true);
+  };
+
+  const handleNameChange = (e) => {
+    handleChange();
+    setName(e.target.value);
+  };
+
+  const handleGenderChange = (e) => {
+    handleChange();
+    setGender(e.target.value);
+  };
+
+  const handleBioChange = (e) => {
+    handleChange();
+    setBio(e.target.value);
+  };
+
+  const saveProfile = () => {
+    fetch("http://localhost:5001/profile", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({
+        name,
+        bio,
+        gender,
+      }),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log("Profile Updated JSON", json);
+        alert("Profile Updated");
+        setInputChanged(false);
+      });
+  };
 
   return (
-    <div>
-      <div className="row align-items-center profile-header">
-        <div className="col-md-2 mb-3">
-          <img
-            src={picture}
-            alt="Profile"
-            className="rounded-circle img-fluid profile-picture mb-3 mb-md-0"
-          />
-        </div>
-        <div className="col-md text-center text-md-left">
-          <h2>{name}</h2>
-          <p className="lead text-muted">{email}</p>
-        </div>
-      </div>
-      <div className="row">
-        <pre className="col-12 text-light bg-dark p-4">
-          {JSON.stringify(user, null, 2)}
-        </pre>
-      </div>
-    </div>
+    <>
+      <Container className="profile-container">
+        <Row className="profile-container-row">
+          <Col xs={12} md={6}>
+            <h2 className="profile-form-title">Your details</h2>
+            <Form className="profile-form">
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email</Form.Label>
+                <Form.Control type="email" placeholder={email} disabled />
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={name}
+                  aria-label="name field"
+                  onChange={(e) => handleNameChange(e)}
+                />
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                <Form.Label>Gender</Form.Label>
+                <Form.Select
+                  aria-label="select gender"
+                  value={gender}
+                  onChange={(e) => handleGenderChange(e)}
+                >
+                  <option>Select a Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                  <option value="Non-identifiable">
+                    Prefer not to self identify
+                  </option>
+                </Form.Select>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicBio">
+                <Form.Label>Bio</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={5}
+                  value={bio}
+                  aria-label="bio field"
+                  onChange={(e) => handleBioChange(e)}
+                />
+              </Form.Group>
+
+              <Button
+                variant="primary"
+                className="btn btn-primary"
+                disabled={!inputChanged}
+                onClick={() => saveProfile()}
+              >
+                Save
+              </Button>
+            </Form>
+          </Col>
+        </Row>
+      </Container>
+    </>
   );
-};
+}
 
 export default Profile;
