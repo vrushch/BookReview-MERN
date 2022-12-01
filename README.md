@@ -9,7 +9,8 @@ https://project-3-frontend.onrender.com/
 (might take some time to render first time , as onrender deactivates not frequently used site)
 
 ---
-## Member Contribution
+## Member Contribution (Iteration 1)
+
 * Karishma:
   * Creating the backend with routes and controls for books
   * Adding the Details, Update, and Delete functionality for reviews on frontend
@@ -21,6 +22,21 @@ https://project-3-frontend.onrender.com/
 * Vrushal:
   * Adding the reviews routes and controls on backend for insert update and delete
   * Creating the frontend and adding the Home page on the frontend to display the list of the books.
+
+---
+## Member Contribution (Iteration 2)
+
+* Karishma:
+  * Creating the backend with routes and controls for profile and adding it to local DB.
+  * Showing profile details on frontend and editing the profile details.
+
+* Venkateswari:
+  * Creating external api in Auth0 and calling secured api from frontend.
+  * User authorization in the backend.
+
+* Vrushal:
+  * Adding login and logout to the frontend.
+  * Displaying dynamic content when the user is logged in.
 
 ---
 ## Target Audience.
@@ -58,10 +74,19 @@ The **teenagers** are the target audience.
 <img src="./sketches/image_1.png" alt="drawing" width="400"/>
 
 ---
-## Frontend screenshots.
+## Frontend screenshots. (Iteration 1)
 
 <img src="./sketches/frontend_1.png" alt="drawing" width="400"/>
 <img src="./sketches/frontend_2.png" alt="drawing" width="400"/>
+
+---
+## Frontend screenshots. (Iteration 2)
+
+<img src="./sketches/iter2_p1.png" alt="drawing" width="400"/>
+<img src="./sketches/iter2_p2.png" alt="drawing" width="400"/>
+<img src="./sketches/iter2_p3.png" alt="drawing" width="400"/>
+<img src="./sketches/iter2_p4.png" alt="drawing" width="400"/>
+<img src="./sketches/iter2_p5.png" alt="drawing" width="400"/>
 
 ---
 ## Assumptions. 
