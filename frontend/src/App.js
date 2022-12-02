@@ -4,7 +4,14 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import { NavBar, Footer, Loading } from "./components";
 import VerifyUser from "./components/VerifyUser";
-import { Home, Profile, ExternalApi, Search, BookDetail } from "./views";
+import {
+  Home,
+  Profile,
+  ExternalApi,
+  Search,
+  BookDetail,
+  BookDetailsView,
+} from "./views";
 import ProtectedRoute from "./auth/protected-route";
 
 import "./App.css";
@@ -27,6 +34,10 @@ const App = () => {
           <Route path="/search" exact component={Search} />
           <Route path="/verify-user" component={VerifyUser} />
           <ProtectedRoute path="/bookDetails/:bookId" component={BookDetail} />
+          <ProtectedRoute
+            path="/bookDetailsView/:bookId"
+            component={BookDetailsView}
+          />
           <Route path="*" element={<p>Nothing to match this path. </p>} />
         </Switch>
       </div>

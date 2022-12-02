@@ -20,7 +20,7 @@ const SearchBox = (props) => {
   };
   function navigateToBookDetails(bookid) {
     console.log(bookid);
-    history.push(`/bookDetails/${bookid}`);
+    history.push(`/bookDetailsView/${bookid}`);
   }
   useEffect(() => {
     getBookRequest(searchValue);
@@ -47,7 +47,7 @@ const SearchBox = (props) => {
           <div
             className="image-container d-flex justify-content-start m-3"
             key={index}
-            onClick={() => navigateToBookDetails(book._id)}
+            onClick={() => navigateToBookDetails(book.id)}
           >
             <img src={book.volumeInfo.imageLinks.thumbnail} alt="book"></img>
           </div>
