@@ -28,9 +28,11 @@ var checkJWT = jwt({
 });
 
 router.post("/add", checkJWT, async function (req, res) {
+  const auth0Id = req.auth.sub;
   let addObject = {
     book_id: req.body.book_id,
     review_text: req.body.review_text,
+    user_id: auth0Id,
   };
 
   try {
@@ -52,8 +54,9 @@ router.get("/", async function (req, res) {
 });
 
 router.patch("/edit", checkJWT, async function (req, res) {
+  const auth0Id = req.auth.sub;
   try {
-    const filter = { _id: ObjectId(req.body._id) };
+    const filter = { _id: ObjectId(req.body._id), user_id: auth0Id };
     const updateInfo = {
       $set: {
         review_text: req.body.review_text,
@@ -68,8 +71,12 @@ router.patch("/edit", checkJWT, async function (req, res) {
 });
 
 router.delete("/delete/:reviewId", checkJWT, async function (req, res) {
+  const auth0Id = req.auth.sub;
   try {
-    await deleteOne({ _id: ObjectId(req.params.reviewId) }, collectionName);
+    await deleteOne(
+      { _id: ObjectId(req.params.reviewId), user_id: auth0Id },
+      collectionName
+    );
     res.status(200).send();
   } catch (err) {
     console.log(err);
@@ -88,6 +95,44 @@ router.get("/book/:bookId", checkJWT, async function (req, res) {
     } else {
       res.json({});
     }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/bookuser/:bookId", checkJWT, async function (req, res) {
+  const auth0Id = req.auth.sub;
+  try {
+    const data = await readAllWithFilter(
+      { book_id: req.params.bookId, user_id: auth0Id },
+      collectionName
+    );
+    if (data) {
+      res.json(data);
+    } else {
+      res.json({});
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
+router.get("/reviewedbooks", checkJWT, async function (req, res) {
+  const auth0Id = req.auth.sub;
+  try {
+    let data = await readAllWithFilter({ user_id: auth0Id }, collectionName);
+    let books = [];
+    data.forEach((item) => books.push(ObjectId(item.book_id)));
+    books = [...new Set(books)];
+    data = await readAllWithFilter(
+      {
+        _id: { $in: books },
+      },
+      "books"
+    );
+    res.json(data);
   } catch (err) {
     console.log(err);
     res.status(500).send("Internal Server Error");
