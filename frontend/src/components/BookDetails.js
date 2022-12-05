@@ -5,6 +5,7 @@ import { useAuthToken } from "../auth/AuthTokenContext";
 export default function BookDetails() {
   const [bookDetails, setBookDetails] = useState(0);
   const [reviewsDetails, setReviews] = useState(0);
+  const [viewAllReviews, setAllReview] = useState(0);
   const [reviewUpdated, setReviewUpdated] = useState(false);
   const [addReview, setAddReview] = useState(false);
   const [editReview, setEditReview] = useState(false);
@@ -51,6 +52,29 @@ export default function BookDetails() {
       }
     };
     getReviewsDetails();
+  }, [bookId, reviewUpdated]);
+
+  useEffect(() => {
+    const getAllReviewsDetails = async () => {
+      const url = `https://project-3-backend-fevm.onrender.com/api/reviews`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+          accept: "application/json",
+        },
+      });
+      const responseJson = await response.json();
+      if (responseJson) {
+        console.log(responseJson);
+        const bookReviews = responseJson.filter((review) => {
+          return review.book_id === bookId;
+        });
+        setAllReview(bookReviews);
+      }
+    };
+    getAllReviewsDetails();
   }, [bookId, reviewUpdated]);
 
   async function deleteReview(reviewId) {
@@ -111,7 +135,7 @@ export default function BookDetails() {
 
   return (
     <>
-      {bookDetails && reviewsDetails && (
+      {bookDetails && reviewsDetails && viewAllReviews && (
         <>
           <h2>The details of book</h2>
           <h3>Title</h3>
@@ -176,6 +200,9 @@ export default function BookDetails() {
               )}
             </div>
           )}
+          {viewAllReviews.map((review, index) => {
+            return <div key={index}>{review.review_text}</div>;
+          })}
         </>
       )}
     </>
