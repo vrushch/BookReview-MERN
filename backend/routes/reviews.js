@@ -119,4 +119,24 @@ router.get("/bookuser/:bookId", checkJWT, async function (req, res) {
   }
 });
 
+router.get("/reviewedbooks", checkJWT, async function (req, res) {
+  const auth0Id = req.auth.sub;
+  try {
+    let data = await readAllWithFilter({ user_id: auth0Id }, collectionName);
+    let books = [];
+    data.forEach((item) => books.push(ObjectId(item.book_id)));
+    books = [...new Set(books)];
+    data = await readAllWithFilter(
+      {
+        _id: { $in: books },
+      },
+      "books"
+    );
+    res.json(data);
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Internal Server Error");
+  }
+});
+
 module.exports = router;
