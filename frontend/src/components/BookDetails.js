@@ -31,8 +31,16 @@ export default function BookDetails() {
 
   useEffect(() => {
     const getReviewsDetails = async () => {
-      const url = `https://project-3-backend-fevm.onrender.com/api/reviews`;
-      const response = await fetch(url);
+      //const url = `https://project-3-backend-fevm.onrender.com/api/reviews`;
+      const url = `https://project-3-backend-fevm.onrender.com/api/reviews/bookuser`;
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+          accept: "application/json",
+        },
+      });
       const responseJson = await response.json();
       if (responseJson) {
         console.log(responseJson);

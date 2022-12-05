@@ -101,13 +101,10 @@ router.get("/book/:bookId", checkJWT, async function (req, res) {
   }
 });
 
-router.get("/bookuser/:bookId", checkJWT, async function (req, res) {
+router.get("/bookuser", checkJWT, async function (req, res) {
   const auth0Id = req.auth.sub;
   try {
-    const data = await readAllWithFilter(
-      { book_id: req.params.bookId, user_id: auth0Id },
-      collectionName
-    );
+    const data = await readAllWithFilter({ user_id: auth0Id }, collectionName);
     if (data) {
       res.json(data);
     } else {
