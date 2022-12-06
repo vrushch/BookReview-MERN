@@ -140,6 +140,19 @@ export default function BookDetails() {
           <h2>The details of book</h2>
           <h3>Title</h3>
           <div>{bookDetails.volumeInfo.title}</div>
+          <div class="col-md-12 bg-light text-right">
+            <button
+              type="button"
+              class="btn btn-success"
+              onClick={() => {
+                window.open(
+                  `https://vpl.bibliocommons.com/v2/search?query=${bookDetails.volumeInfo.title}`
+                );
+              }}
+            >
+              Borrow book
+            </button>
+          </div>
           <h3>Subtitle</h3>
           <div>{bookDetails.volumeInfo.subtitle}</div>
           <h3>Description</h3>
