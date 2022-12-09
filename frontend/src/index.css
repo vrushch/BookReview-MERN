@@ -68,3 +68,76 @@ code {
 .hero .app-logo {
   max-width: 10.5rem;
 }
+
+body {
+  background-color: #edf1f5;
+  margin-top: 20px;
+}
+
+.card {
+  margin-bottom: 30px;
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 0 solid transparent;
+  border-radius: 0;
+}
+
+.card .card-subtitle {
+  font-weight: 300;
+  margin-bottom: 10px;
+  color: #8898aa;
+}
+
+.table-product.table-striped tbody tr:nth-of-type(odd) {
+  background-color: #f3f8fa !important;
+  width: 100%;
+}
+
+.table-product td {
+  border-top: 0px solid #dee2e6 !important;
+  color: #728299 !important;
+}
+
+.table-product .add-new i {
+  margin-right: 4px;
+}
+
+.white-box {
+  padding-top: 150px;
+}
+
+.btn.btn-info {
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.delete_icon {
+  color: red;
+}
+
+.edit_icon {
+  color: #ffc107;
+}
+
+.edit_delete {
+  margin-left: 10px;
+  float: right;
+}
+
+.btn.btn-success {
+  margin-left: 10px;
+  float: right;
+  border-radius: 5px;
+}
+
+.table-product td h4 {
+  color: black;
+}
