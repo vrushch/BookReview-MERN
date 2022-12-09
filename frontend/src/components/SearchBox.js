@@ -5,7 +5,7 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 
 const SearchBox = (props) => {
   const [books, setBooks] = useState([]);
-  const [searchValue, setSearchValue] = useState("harry potter");
+  const [searchValue, setSearchValue] = useState();
   const [searchNumber, setSearchNumber] = useState(1);
   const history = useHistory();
 
