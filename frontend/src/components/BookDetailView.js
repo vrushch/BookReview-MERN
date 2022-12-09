@@ -30,6 +30,20 @@ export default function BookDetailsView() {
           <div>{bookDetails.volumeInfo.subtitle}</div>
           <h3>Description</h3>
           <div>{bookDetails.volumeInfo.description}</div>
+
+          <div class="col-md-12 text-left">
+            <button
+              type="button"
+              class="btn btn-success"
+              onClick={() => {
+                window.open(
+                  `https://vpl.bibliocommons.com/v2/search?query=${bookDetails.volumeInfo.title}`
+                );
+              }}
+            >
+              Borrow book
+            </button>
+          </div>
         </>
       )}
     </>
