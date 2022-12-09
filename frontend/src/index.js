@@ -6,6 +6,8 @@ import { BrowserRouter } from "react-router-dom";
 import Auth0ProviderWithHistory from "./auth/auth0-provider-with-history";
 import "./index.css";
 import { AuthTokenProvider } from "./auth/AuthTokenContext";
+import "../node_modules/font-awesome/css/font-awesome.min.css";
+import "../node_modules/material-icons/css/material-icons.min.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
