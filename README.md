@@ -38,6 +38,22 @@ https://project-3-frontend.onrender.com/
   * Adding login and logout to the frontend.
   * Displaying dynamic content when the user is logged in.
 
+
+---
+## Member Contribution (Iteration 3)
+
+* Karishma:
+  * Formatting the book details page to show all the reviews and make the reviews editable for the logged user and adding borrow book functionality.
+  * Fixing some bugs and cleaning the code to remove unnecessary debug statements.
+
+* Venkateswari:
+  * Formatting the Book Details of Searched book item.
+  * Added the borrow book functionality by forwarding user to VPL website.
+
+* Vrushal:
+  * Implemented search book functionality by using google books api.
+  * Mapped reviews to particular user in backend and made possible for only review owner user to edit or delete particular review.
+
 ---
 ## Target Audience.
 The proportion of children who are daily readers drops markedly from childhood to the teen and teenage years. Used wisely, technology such as ereaders could help support ongoing efforts to reduce disparities, promote reading achievement, and fuel a passion for reading among all young people.
