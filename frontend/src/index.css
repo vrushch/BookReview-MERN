@@ -141,3 +141,13 @@ body {
 .table-product td h4 {
   color: black;
 }
+
+.textarea {
+  resize: both;
+}
+
+.borrowbutton {
+  border-radius: 5px;
+  margin-bottom: 20px;
+  font-size: 16px;
+}

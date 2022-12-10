@@ -9,12 +9,7 @@ import { useAuthToken } from "../auth/AuthTokenContext";
 import { useAuth0 } from "@auth0/auth0-react";
 
 function Profile() {
-  //const { isAuthenticated, getAccessTokenSilently } = useAuth0();
-  console.log("Before Token");
   const { accessToken } = useAuthToken();
-  console.log("Token" + accessToken);
-  //const { accessToken } = getAccessTokenSilently();
-  console.log(accessToken);
 
   const [inputChanged, setInputChanged] = useState(false);
   const [name, setName] = useState("");

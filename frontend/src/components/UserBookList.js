@@ -24,7 +24,6 @@ const UserBookList = (props) => {
     }
   };
   function navigateToBookDetails(bookid) {
-    console.log(bookid);
     history.push(`/bookDetails/${bookid}`);
   }
   useEffect(() => {
