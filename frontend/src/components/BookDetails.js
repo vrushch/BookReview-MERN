@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { useAuthToken } from "../auth/AuthTokenContext";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
+import TextareaAutosize from "@mui/base/TextareaAutosize";
 
 export default function BookDetails() {
   const [bookDetails, setBookDetails] = useState(0);
@@ -15,8 +16,6 @@ export default function BookDetails() {
   const [editIndex, setEditIndex] = useState(0);
   const params = useParams();
   const bookId = params.bookId;
-  console.log("++++++");
-  console.log(bookId);
   const { accessToken } = useAuthToken();
 
   useEffect(() => {
@@ -34,7 +33,6 @@ export default function BookDetails() {
 
   useEffect(() => {
     const getReviewsDetails = async () => {
-      //const url = `https://project-3-backend-fevm.onrender.com/api/reviews`;
       const url = `https://project-3-backend-fevm.onrender.com/api/reviews/bookuser`;
       const response = await fetch(url, {
         method: "GET",
@@ -46,7 +44,6 @@ export default function BookDetails() {
       });
       const responseJson = await response.json();
       if (responseJson) {
-        console.log(responseJson);
         const bookReviews = responseJson.filter((review) => {
           return review.book_id === bookId;
         });
@@ -69,7 +66,6 @@ export default function BookDetails() {
       });
       const responseJson = await response.json();
       if (responseJson) {
-        console.log(responseJson);
         const bookReviews = responseJson.filter((review) => {
           return review.book_id === bookId;
         });
@@ -161,6 +157,19 @@ export default function BookDetails() {
                     <p>{bookDetails.volumeInfo.description}</p>
                   </div>
                   <div className="col-lg-12 col-md-12 col-sm-12">
+                    <button
+                      type="button"
+                      className="btn btn-success borrowbutton"
+                      onClick={() => {
+                        window.open(
+                          `https://vpl.bibliocommons.com/v2/search?query=${bookDetails.volumeInfo.title}`
+                        );
+                      }}
+                    >
+                      Borrow book
+                    </button>
+                  </div>
+                  <div className="col-lg-12 col-md-12 col-sm-12">
                     <h3 className="box-title mt-5">Book Reviews</h3>
                     <div>
                       {!editReview && (
@@ -206,7 +215,8 @@ export default function BookDetails() {
                                 })
                               ) : (
                                 <div>
-                                  <input
+                                  <TextareaAutosize
+                                    className="textarea"
                                     placeholder=" Enter Review"
                                     value={editReviewText}
                                     onChange={(e) =>
@@ -246,7 +256,10 @@ export default function BookDetails() {
                               </h4>
                               {viewAllReviews.map((review, index) => {
                                 return (
-                                  <table className="table table-striped table-product">
+                                  <table
+                                    className="table table-striped table-product"
+                                    key={index}
+                                  >
                                     <tbody>
                                       <tr>
                                         <td>
@@ -273,94 +286,4 @@ export default function BookDetails() {
       )}
     </>
   );
-
-  // return (
-  //   <>
-  //     {bookDetails && reviewsDetails && viewAllReviews && (
-  //       <>
-  //         <h2>The details of book</h2>
-  //         <h3>Title</h3>
-  //         <div>{bookDetails.volumeInfo.title}</div>
-  //         <div class="col-md-12 bg-light text-right">
-  //           <button
-  //             type="button"
-  //             class="btn btn-success"
-  //             onClick={() => {
-  //               window.open(
-  //                 `https://vpl.bibliocommons.com/v2/search?query=${bookDetails.volumeInfo.title}`
-  //               );
-  //             }}
-  //           >
-  //             Borrow book
-  //           </button>
-  //         </div>
-  //         <h3>Subtitle</h3>
-  //         <div>{bookDetails.volumeInfo.subtitle}</div>
-  //         <h3>Description</h3>
-  //         <div>{bookDetails.volumeInfo.description}</div>
-  //         <h3>Reviews</h3>
-  // {
-  //   !editReview && (
-  //     <button
-  //       onClick={() => {
-  //         setAddReview(true);
-  //         setEditReview(true);
-  //       }}
-  //     >
-  //       Add New Review{" "}
-  //     </button>
-  //   );
-  // }
-  // {
-  //   !editReview ? (
-  //     reviewsDetails.map((review, index) => {
-  //       return (
-  //         <div key={index}>
-  //           {review.review_text}
-  //           <button onClick={() => deleteReview(review._id)}>Delete</button>
-  //           <button
-  //             onClick={() => {
-  //               setEditReview(true);
-  //               setEditIndex(index);
-  //             }}
-  //           >
-  //             Update
-  //           </button>
-  //         </div>
-  //       );
-  //     })
-  //   ) : (
-  //     <div>
-  //       <input
-  //         placeholder="Enter New Review"
-  //         value={editReviewText}
-  //         onChange={(e) => setEditReviewText(e.target.value)}
-  //       />
-  //       {addReview ? (
-  //         <button
-  //           onClick={() => {
-  //             createReview(editReviewText);
-  //           }}
-  //         >
-  //           Create{" "}
-  //         </button>
-  //       ) : (
-  //         <button
-  //           onClick={() =>
-  //             saveReview(reviewsDetails[editIndex]._id, editReviewText)
-  //           }
-  //         >
-  //           Save
-  //         </button>
-  //       )}
-  //     </div>
-  //   );
-  // }
-  //         {viewAllReviews.map((review, index) => {
-  //           return <div key={index}>{review.review_text}</div>;
-  //         })}
-  //       </>
-  //     )}
-  //   </>
-  // );
 }
