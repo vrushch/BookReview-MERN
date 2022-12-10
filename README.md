@@ -89,6 +89,15 @@ The **teenagers** are the target audience.
 <img src="./sketches/iter2_p5.png" alt="drawing" width="400"/>
 
 ---
+## Frontend screenshots. (Iteration 3)
+
+<img src="./sketches/iter3_p1.png" alt="drawing" width="400"/>
+<img src="./sketches/iter3_p2.png" alt="drawing" width="400"/>
+<img src="./sketches/iter3_p3.png" alt="drawing" width="400"/>
+<img src="./sketches/iter3_p4.png" alt="drawing" width="400"/>
+<img src="./sketches/iter3_p5.png" alt="drawing" width="400"/>
+
+---
 ## Assumptions. 
 * User has basic knowledge of web surfing
 
