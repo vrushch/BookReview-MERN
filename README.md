@@ -9,6 +9,10 @@ https://project-3-frontend.onrender.com/
 (might take some time to render first time , as onrender deactivates not frequently used site)
 
 ---
+## Youtube demo link
+https://youtu.be/6VzNGeSZJS0
+
+---
 ## Member Contribution (Iteration 1)
 
 * Karishma:
@@ -112,6 +116,16 @@ The **teenagers** are the target audience.
 <img src="./sketches/iter3_p3.png" alt="drawing" width="400"/>
 <img src="./sketches/iter3_p4.png" alt="drawing" width="400"/>
 <img src="./sketches/iter3_p5.png" alt="drawing" width="400"/>
+
+---
+## Accessibility reports
+
+<img src="./reports/report_1.png" alt="drawing" width="600"/>
+<img src="./reports/report_2.png" alt="drawing" width="600"/>
+<img src="./reports/report_3.png" alt="drawing" width="600"/>
+<img src="./reports/report_4.png" alt="drawing" width="600"/>
+Accessibility is 92 due to issue with React Bootstrap button
+<img src="./reports/report_5.png" alt="drawing" width="600"/>
 
 ---
 ## Assumptions. 
